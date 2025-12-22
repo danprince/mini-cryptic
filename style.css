@@ -5,9 +5,9 @@
 body {
   background-color: #add3ff;
   font-family: "Mulish", sans-serif;
-  min-height: 100vh;
-
-  padding: 32px;
+  min-height: 100dvh;
+  overflow-x: hidden;
+  padding: 8px;
   max-width: 640px;
   margin: 0 auto;
   display: flex;
@@ -22,6 +22,7 @@ h1 {
 
 header {
   text-align: center;
+  margin-top: 32px;
 }
 
 [aria-hidden] {
@@ -40,6 +41,7 @@ header {
   font-family: "Sansita", serif;
   padding: 4px;
   display: flex;
+  flex-wrap: wrap;
 }
 
 #cryptic-input button {
@@ -50,6 +52,7 @@ header {
   border: 0;
   box-shadow: 0 0 0 4px black;
   margin-right: 4px;
+  margin-bottom: 4px;
   width: 46px;
   height: 46px;
   background-color: white;
@@ -87,6 +90,7 @@ header {
 #keyboard {
   display: flex;
   flex-direction: column;
+  align-self: stretch;
   gap: 4px;
 }
 
@@ -104,13 +108,13 @@ header {
   font-weight: 200;
   border-radius: 4px;
   display: flex;
-  padding: 8px 24px;
+  padding: 8px 0;
   text-align: center;
   cursor: pointer;
   align-items: center;
   justify-content: center;
   border-bottom: solid 1px #b5b5b5;
-  flex: 1 0 40px;
+  flex: 1;
 }
 
 #keyboard button:active {
