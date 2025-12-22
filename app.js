@@ -217,6 +217,7 @@ function PUZZLE(clue, answer, author) {
 
 console.log(
   `
+
                  %cm%c
 
          %cMini Cryptic%c
@@ -227,18 +228,20 @@ console.log(
 
 
 
-           %cMake a cryptic!%c
+          %cMake a cryptic!%c
 
-     You can generate your own puzzle to
-  send to someone by entering the following
-                code into this console:
+    You can generate your own puzzle to
+send to someone by entering the following
+               code into this console:
 
 %c
 PUZZLE(
   "The clue that you want to provide",
   "theanswer",
   "Your name"
-)`,
+)
+
+`,
   `
   font-family: serif;
   font-size: 24px;
