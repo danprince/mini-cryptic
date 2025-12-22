@@ -29,6 +29,10 @@ let ui = {
   /**
    * @type {Element}
    */
+  keyboard: required(document.getElementById("keyboard")),
+  /**
+   * @type {Element}
+   */
   focus: document.createElement("button"),
 };
 
@@ -79,9 +83,16 @@ function keydown({ key }) {
   if (key === "Enter") check();
   let letter = key.toLowerCase();
   if (letter.length === 1 && letter >= "a" && letter <= "z") {
-    ui.focus.textContent = letter;
-    right();
+    type(letter);
   }
+}
+
+/**
+ * @param {string} letter
+ */
+function type(letter) {
+  ui.focus.textContent = letter;
+  right();
 }
 
 /**
@@ -133,6 +144,34 @@ function setup() {
   ui.input.addEventListener("click", click);
   ui.check.addEventListener("click", check);
   window.addEventListener("keydown", keydown);
+
+  setupKeyboard();
+}
+
+function setupKeyboard() {
+  let rows = ["qwertyuiop", "asdfghjkl", "zxcvbnm⌫"];
+
+  for (let row of rows) {
+    let container = document.createElement("div");
+    container.className = "keyboard-row";
+
+    for (let key of row) {
+      let button = document.createElement("button");
+      button.textContent = key;
+
+      button.addEventListener("click", () => {
+        if (key === "⌫") {
+          backspace();
+        } else {
+          type(key);
+        }
+      });
+
+      container.append(button);
+    }
+
+    ui.keyboard.append(container);
+  }
 }
 
 /**
