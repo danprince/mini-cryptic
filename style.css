@@ -1,0 +1,187 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background-color: #add3ff;
+  font-family: "Mulish", sans-serif;
+  font-display: block;
+}
+
+h1 {
+  margin: 8px 0;
+}
+
+header {
+  text-align: center;
+}
+
+main {
+  padding: 32px;
+  max-width: 640px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  align-items: center;
+}
+
+[aria-hidden] {
+  display: none;
+}
+
+#cryptic-clue {
+  background-color: white;
+  border-radius: 8px;
+  padding: 16px;
+  font-size: 24px;
+  font-weight: 300;
+}
+
+#cryptic-input {
+  font-family: "Sansita", serif;
+  padding: 4px;
+  display: flex;
+}
+
+#cryptic-input button {
+  font: inherit;
+  font-weight: bold;
+  font-style: italic;
+  font-size: 28pt;
+  border: 0;
+  box-shadow: 0 0 0 4px black;
+  margin-right: 4px;
+  width: 46px;
+  height: 46px;
+  background-color: white;
+  outline: none;
+  padding: 0;
+  padding-bottom: 3px;
+}
+
+#cryptic-input button[aria-current] {
+  background-color: #f5d1fd;
+}
+
+#cryptic-input button:first-child {
+  border-top-left-radius: 4px;
+  border-bottom-left-radius: 4px;
+}
+
+#cryptic-input button:last-child {
+  border-top-right-radius: 4px;
+  border-bottom-right-radius: 4px;
+}
+
+#cryptic-result {
+  background-color: white;
+  border: solid 3px black;
+  border-right-width: 6px;
+  border-bottom-width: 6px;
+  padding: 16px;
+  border-radius: 16px;
+  font-size: 16px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.text-xl {
+  font-size: 48px;
+}
+
+.text-lg {
+  font-size: 24px;
+}
+
+.btn {
+  font-family: "Sansita", serif;
+  font-weight: bold;
+  font-style: italic;
+  font-size: 22px;
+  border: 0;
+  border: solid 3px black;
+  border-right-width: 6px;
+  border-bottom-width: 6px;
+  border-radius: 48px;
+  padding: 8px 32px;
+  padding-bottom: 12px;
+  background-color: #f5d1fd;
+  outline: none;
+  transition: all;
+  transition-duration: 300ms;
+  background-color: #f5d1fd;
+}
+
+.btn:not(:disabled):hover {
+  transform: scale(105%);
+}
+
+.btn:active,
+.btn:disabled {
+  opacity: 50%;
+}
+
+#logo {
+  font-family: "Sansita", serif;
+  font-weight: bold;
+  font-style: italic;
+  font-size: 14pt;
+  background-color: #f5d1fd;
+  border: solid 3px black;
+  border-radius: 4px;
+  width: 24px;
+  height: 24px;
+  display: inline-block;
+  box-shadow: 2px 2px white;
+}
+
+.shake {
+  animation: shake 0.5s ease-in-out 1;
+}
+
+@keyframes shake {
+  0% {
+    transform: translate(1px, 1px);
+  }
+
+  10% {
+    transform: translate(-1px, -2px);
+  }
+
+  20% {
+    transform: translate(-3px);
+  }
+
+  30% {
+    transform: translate(3px, 2px);
+  }
+
+  40% {
+    transform: translate(1px, -1px);
+  }
+
+  50% {
+    transform: translate(-1px, 2px);
+  }
+
+  60% {
+    transform: translate(-3px, 1px);
+  }
+
+  70% {
+    transform: translate(3px, 1px);
+  }
+
+  80% {
+    transform: translate(-1px, -1px);
+  }
+
+  90% {
+    transform: translate(1px, 2px);
+  }
+
+  100% {
+    transform: translate(1px, -2px);
+  }
+}
