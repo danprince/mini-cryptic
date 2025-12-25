@@ -128,7 +128,7 @@ function right() {
 }
 
 function setup() {
-  ui.clue.textContent = puzzle.clue;
+  ui.clue.textContent = `${puzzle.clue} (${puzzle.length})`;
   ui.author.textContent = puzzle.author;
 
   for (let i = 0; i < puzzle.length; i++) {
