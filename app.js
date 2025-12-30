@@ -34,6 +34,14 @@ let ui = {
    * @type {Element}
    */
   focus: document.createElement("button"),
+  /**
+   * @type {Element[]}
+   */
+  words: [],
+  /**
+   * @type {Element[]}
+   */
+  letters: [],
 };
 
 /**
@@ -69,7 +77,8 @@ function hash(text) {
  */
 function click({ target }) {
   if (target instanceof HTMLButtonElement) {
-    focus(target);
+    let index = ui.letters.indexOf(target);
+    focus(index);
   }
 }
 
@@ -96,16 +105,22 @@ function type(letter) {
 }
 
 /**
- * @param {Element} button
+ * @param {number} index
  */
-function focus(button) {
-  ui.focus.removeAttribute("aria-current");
-  ui.focus = button;
-  ui.focus.setAttribute("aria-current", "");
+function focus(index) {
+  let button = ui.letters[index];
+
+  if (button) {
+    ui.focus.removeAttribute("aria-current");
+    ui.focus = button;
+    ui.focus.setAttribute("aria-current", "");
+  }
 }
 
 function check() {
-  if (hash(ui.input.textContent) === puzzle.hash) {
+  let answer = ui.words.map(word => word.textContent).join(" ");
+
+  if (hash(answer) === puzzle.hash) {
     ui.result.removeAttribute("aria-hidden");
     ui.check.setAttribute("disabled", "");
   } else {
@@ -120,26 +135,35 @@ function backspace() {
 }
 
 function left() {
-  focus(ui.focus.previousElementSibling ?? ui.focus);
+  let index = ui.letters.indexOf(ui.focus);
+  focus(index - 1);
 }
 
 function right() {
-  focus(ui.focus.nextElementSibling ?? ui.focus);
+  let index = ui.letters.indexOf(ui.focus);
+  focus(index + 1);
 }
 
 function setup() {
-  ui.clue.textContent = `${puzzle.clue} (${puzzle.length})`;
+  ui.clue.textContent = `${puzzle.clue} (${puzzle.lengths.join(", ")})`;
   ui.author.textContent = puzzle.author;
 
-  for (let i = 0; i < puzzle.length; i++) {
-    let button = document.createElement("button");
-    button.tabIndex = -1;
-    ui.input.append(button);
+  for (let length of puzzle.lengths) {
+    let word = document.createElement("div");
+    word.className = "word";
+
+    for (let i = 0; i < length; i++) {
+      let button = document.createElement("button");
+      button.tabIndex = -1;
+      word.append(button);
+      ui.letters.push(button);
+    }
+
+    ui.words.push(word);
+    ui.input.append(word);
   }
 
-  if (ui.input.firstElementChild) {
-    focus(ui.input.firstElementChild);
-  }
+  focus(0);
 
   ui.input.addEventListener("click", click);
   ui.check.addEventListener("click", check);
@@ -179,11 +203,11 @@ function setupKeyboard() {
  */
 function decode(base64) {
   let parts = atob(base64).split("\n");
-  let length = parseInt(parts[0]) || 0;
+  let lengths = parts[0].split(",").map((len) => parseInt(len));
   let hash = parseInt(parts[1]) || 0;
   let clue = parts[2];
   let author = parts[3];
-  return { length, hash, clue, author };
+  return { lengths, hash, clue, author };
 }
 
 /**
@@ -193,8 +217,10 @@ function decode(base64) {
  * @return {string}
  */
 function encode(clue, answer, author) {
-  let secret = hash(answer.trim().toLowerCase());
-  return btoa(`${answer.length}\n${secret}\n${clue}\n${author}`);
+  let words = answer.split(" ");
+  let lengths = words.map((word) => word.length);
+  let secret = hash(answer);
+  return btoa(`${lengths.join(",")}\n${secret}\n${clue}\n${author}`);
 }
 
 /**
@@ -203,8 +229,10 @@ function encode(clue, answer, author) {
  * @param {string} author
  */
 function PUZZLE(clue, answer, author) {
-  if (/\s/.test(answer)) {
-    console.log("Sorry! Answers can't have spaces in them yet!");
+  answer = answer.trim().toLowerCase();
+
+  if (!/^[a-z ]*$/.test(answer)) {
+    console.log("There are invalid characters in your answer!");
     return;
   }
 

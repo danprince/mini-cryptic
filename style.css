@@ -42,6 +42,11 @@ header {
   padding: 4px;
   display: flex;
   flex-wrap: wrap;
+  gap: 16px;
+}
+
+#cryptic-input .word {
+  display: flex;
 }
 
 #cryptic-input button {
